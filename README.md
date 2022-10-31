@@ -1,8 +1,8 @@
 # Churn Prediction Portfolio
 ## About This File
-The data set belongs to a leading online E-Commerce company. An online retail (E commerce) company wants to know the customers who are going to churn, so accordingly they can approach customer to offer some promos.
+The data set belongs to a leading online E-Commerce company. An online retail (E-commerce) company wants to know the customers who are going to churn, so accordingly they can approach customers to offer some promos.
 <br/> source: https://www.kaggle.com/datasets/ankitverma2010/ecommerce-customer-churn-analysis-and-prediction
-<br/> **Disclaimer: This project is still an on going project**
+#### **Disclaimer: This project is still ongoing**
 ## Exploratory Data Analysis
 #### Content
 - Descriptive Analysis
@@ -12,34 +12,34 @@ The data set belongs to a leading online E-Commerce company. An online retail (E
 
 ### 1. Descriptive Statistics
 
-- Kolom dengan tipe data pada dataset E Commerce Dataset sudah sesuai
-- Beberapa kolom yang memiliki nilai kosong antara lain =
+- Columns with data types in the E-Commerce Dataset dataset are appropriate
+- Some columns that have empty values include =
  `Tenure, WarehouseToHome, HourSpendOnApp,
  OrderAmountHikeFromlastYear, CouponUsed, OrderCount,
  DaySinceLastOrder`
-- Tidak ada kolom yang memiliki nilai summary (min/mean/median/max/unique/top/freq) aneh
+- None of the columns have odd summary values (min/mean/median/max/unique/top/freq)
 
 ### 2. Univariate Analysis
 
-- Terdapat Outliers = `Tenure, WarehouseToHome, HoursSpend OnApp, NumberOfDeviceRegistered, NumberOfAddress, CouponUsed, OrderCount, DaySinceLastOrder, CashbackAmount`
-- Skewed = Hampir semua skewed positif
-- Untuk Target `Churn` terdapat class imbalance
+- There are Outliers = `Tenure, WarehouseToHome, HoursSpend OnApp, NumberOfDeviceRegistered, NumberOfAddress, CouponUsed, OrderCount, DaySinceLastOrder, CashbackAmount`
+- Skewed = Almost all skewed are positive
+- For Target 'Churn' there is a class imbalance
 
 ### 3. Multivariate Analysis
 
-Beberapa hal dapat diperhatikan dari Heatmap:
+A few things to note from the Heatmap:
 
-- `OrderCount` - `CouponUsed` = 0.75 (Korelasi tinggi perlu diperhatikan)
-- `Churn` - `Complain` = 0.25 (Semakin tinggi complain semakin besar kemungkinan chum:
-- `Churn` - `Tenure` = -0.35 (Semekin rendah Tenure semakin besar kemungkinan untuk Churn)
+- `OrderCount` - `CouponUsed` = 0.75 (High correlation is noteworthy)
+- `Churn` - `Complain` = 0.25 (The higher the complaint the more likely it is to chum:
+- `Churn` - `Tenure` = -0.35 (The lower the Tenure the more likely it is to Churn)
 
 ### 4. Business Insight
 
-Setelah melakukan analisis diatas dapat ditarik beberapa insight
+After doing the analysis above, some insights can be drawn
 
-- Customer dengan **Tenure** rendah memiki kecendeningan untuk **Churn** lebih tinggi
-- Customer yang pernah melakukan **Complain** lebih banyak memiliki kecenderungan untuk **Churn** lebih tinggi
-- Customer dengan **status single** memiliki tingkat **churn** paling tinggi dibandingkan status lainnya
+- Customers with low **Tenure** tend to have higher chance of **Churn**
+- Customers who have done **Complain** are more likely to have a higher chance of **Churn**
+- Customers with **single status** have the highest **churn** rate compared to other statuses
 
 ## Data Preprocessing
 #### Content
@@ -48,43 +48,42 @@ Setelah melakukan analisis diatas dapat ditarik beberapa insight
 
 ### 1. Data Cleansing
 - #### Handle missing values
-Total ada 1.856 missing values, dan juga ada 1.856 rows dengan missing values, artinya setiap
-missing values berada pada row yang berbeda, dan tidak ada rows yang memiliki lebih dari satu
-missing values.
-<br/> Jadi jika kita drop semua rows dengan missing values, kita akan membuang 1856 rows atau 32,97
-persen dari dataset dan akan menyebabkan data loss, sehingga treatment yang paling tepat adalah
-dengan imputation menggunakan nilai median. Hal ini dilakukan karena sebagian besar data
-memiliki distribusi skewed kanan (positif)
+In total there are 1,856 missing values, and there are also 1,856 rows with missing values, meaning every
+missing values are in different rows, and no rows have more than one
+missing value.
+<br/> So if we drop all rows with missing values, we will discard 1856 rows or 32.97
+percent of the dataset and will cause data loss, so the most appropriate treatment is
+with imputation using the median value. This is done because most of the data
+has a right-skewed distribution (positive)
 - #### Handle Duplicate
-Untuk value yang redundan seperti di bawah ini dilakukan merge value:
-   - CC dengan Credit Card
-   - COD dengan Cash on Delivery
-   - Phone dengan Mobile Phone
+For redundant values as below, merge values:
+   - CC with Credit Card
+   - COD with Cash on Delivery
+   - Phone with Mobile Phone
 <br/>
 <br/>
 - #### Handle outliers
-    - Handlig outliers dilakukan dengan metode IQR dan Z-Score pada fitur yang berjenis numerical
-    - Dataset dimaintain pada dua kondisi: dengan outlier dan tanpa outlier
+    - Handling outliers is performed using the IQR and Z-Score methods on numerical features
+    - The dataset is maintained under two conditions: with outliers and without outliers
 - #### Feature transformation
-Transformassi data dilakukan dengann metoder Normalisasi, Standarisasi, dan Logaritmik
+Data transformation is carried out using Normalization, Standardization, and Logarithmic methods
 - #### Feature encoding
-    - abel Encoding=Fitur `PereferedLoginDevice` dan `Gender`
+    - able Encoding= `PereferedLoginDevice` and `Gender` . features
     - One hot Encoding=` PreferredPaymentMode`, `PreferedOrderCat`, `MaritalStatus`
 - #### Handle class imbalance
-Proses resampling dengan metode Oversampling dan SMOTE
+Resampling process with Oversampling and SMOTE methods
 ### 2. Feature Engineering
 - #### Feature Selection
-    - Fitur `CouponUsed` tidak dimasukkan ke dalam fitur yang dipakai untuk memodelkan prediksi churn karena berkorelasi tinggi dengan fitur `OrderCount` (redundant)
-    - `CustomerID` di drop karena hanya merupakan identifier
+    - The `CouponUsed` feature is not included in the feature used to model churn predictions because it is highly correlated with the `OrderCount` feature (redundant)
+    - `CustomerID` is dropped because it is only an identifier
 - #### Feature Extraction
     - `CashbackAmountPerOrder` = (CashbackAmount/OrderCount)
     - `CouponUsedPerOrder` = (CouponUsed/OrderCount)
-- #### Fitur Tambahan
-    1. Jumlah items di keranjang/cart
+- #### Additional Features
+    1. Number of items in the cart/cart
     2. Payment Fee (credit card/bank transfer/etc)
     3. Shipping Cost
     4. Shipment_method
     
 ## Modeling
 #### Content
-
